@@ -1,0 +1,16 @@
+.profile__edit-button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #FFFFFF;
+  background-color: #000000;
+  grid-column-start: -2;
+  grid-column-end: -1;
+  grid-row-start: -1;
+  grid-row-end: -2;
+  align-self: end;
+  margin-bottom: 8px;
+  padding: 0;
+  background-image: url(../../../images/profile-pencil.svg);
+  background-repeat: no-repeat;
+  background-position: 7px;
+}
