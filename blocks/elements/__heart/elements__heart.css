@@ -5,3 +5,9 @@
   background-repeat: no-repeat;
   align-self: center;
 }
+
+.elements__heart:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity .5s;
+}
