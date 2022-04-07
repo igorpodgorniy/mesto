@@ -1,0 +1,5 @@
+.elements__info {
+  margin: 22px 20px 26px 22px;
+  display: flex;
+  justify-content: space-between;
+}
