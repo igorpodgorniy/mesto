@@ -7,12 +7,15 @@ const descProfile = document.querySelector('.profile__subtitle');
 const popupNameProfile = document.querySelector('#nameProfile');
 const popupDescProfile = document.querySelector('#descProfile');
 
+function popupClose() {
+  popup.classList.remove('popup_opened');
+}
+
 function formSubmitHandler(event) {
-  console.log(1);
   event.preventDefault();
   nameProfile.textContent = popupNameProfile.value;
   descProfile.textContent = popupDescProfile.value;
-  popup.classList.remove('popup_opened');
+  popupClose();
 }
 
 btnEdit.addEventListener('click', () => {
@@ -22,7 +25,7 @@ btnEdit.addEventListener('click', () => {
 })
 
 btnClose.addEventListener('click', () => {
-  popup.classList.remove('popup_opened');
+  popupClose();
 })
 
 form.addEventListener('submit', formSubmitHandler)
