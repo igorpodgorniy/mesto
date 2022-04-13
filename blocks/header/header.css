@@ -7,7 +7,7 @@
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 40px;
-  border-bottom: 1px solid #545454;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
 
 @media screen and (max-width: 940px) {
