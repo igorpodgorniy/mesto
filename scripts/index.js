@@ -27,7 +27,6 @@ const initialCards = [
 
 const btnEdit = document.querySelector('.profile__edit-button');
 const btnAdd = document.querySelector('.profile__add-button');
-const formEditProfile = document.querySelector('#formEditProfile');
 const btnsClose = document.querySelectorAll('.popup__close');
 const popupEditProfile = document.querySelector('#popupEditProfile');
 const popupAddPhoto = document.querySelector('#popupAddPhoto');
@@ -39,9 +38,7 @@ const popupNamePhoto = document.querySelector('#namePhoto');
 const popupLinkPhoto = document.querySelector('#linkPhoto');
 const elementTemplate = document.querySelector('#element').content;
 const elementParent = document.querySelector('.elements__items');
-const formAddPhoto = document.querySelector('#formEditProfile');
 
-// Добавление фотографии на страницу
 function addElementOnPage(item) {
   const elementItem = elementTemplate.querySelector('.elements__item').cloneNode(true);
   elementItem.querySelector('.elements__image').src = item.link;
@@ -94,9 +91,14 @@ btnsClose.forEach(btnClose => {
   })
 })
 
-formEditProfile.addEventListener('submit', formSubmitHandler);
+popupEditProfile.addEventListener('submit', formSubmitHandler);
 popupAddPhoto.addEventListener('submit', addFormSubmitHandler);
 
 elementParent.addEventListener('click', (evt) => {
-  evt.target.classList.toggle('elements__heart_active');
+  if (evt.target.classList.value.includes('elements__heart')) {
+    evt.target.classList.toggle('elements__heart_active');
+  }
+  if (evt.target.classList.value.includes('elements__delete')) {
+    evt.target.closest('.elements__item').remove();
+  }
 })
