@@ -21,7 +21,7 @@
     </section>
     <section class="elements">
       <ul class="elements__items">
-        <li class="elements__item">
+        <!-- <li class="elements__item">
           <img class="elements__image" src="./images/element-karachaevsk.jpg" alt="Сентинский храм в Карачаевске">
           <div class="elements__info">
             <h2 class="elements__title">Карачаевск</h2>
@@ -62,7 +62,16 @@
             <h2 class="elements__title">Карачаево-Черкессия</h2>
             <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
           </div>
-        </li>
+        </li> -->
+        <template id="element">
+          <li class="elements__item">
+            <img class="elements__image" src="./images/element-karachaevsk.jpg" alt="">
+            <div class="elements__info">
+              <h2 class="elements__title"></h2>
+              <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
+            </div>
+          </li>
+        </template>
       </ul>
     </section>
   </main>
