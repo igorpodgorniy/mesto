@@ -48,20 +48,20 @@ function addElementOnPage(item) {
   elementParent.prepend(elementItem);
 }
 
-function popupClose(popupId) {
+function closePopup(popupId) {
   popupId.classList.remove('popup_opened');
 }
 
-function popupOpen(popupId) {
+function openPopup(popupId) {
   popupId.classList.add('popup_opened');
 }
 
-function formSubmitHandler(event) {
+function submitFormHandler(event) {
   event.preventDefault();
   if (popupNameProfile.value.trim() && popupDescProfile.value.trim()) {
     nameProfile.textContent = popupNameProfile.value;
     descProfile.textContent = popupDescProfile.value;
-    popupClose(popupEditProfile);
+    closePopup(popupEditProfile);
   }
 }
 
@@ -75,7 +75,7 @@ function addFormSubmitHandler(event) {
     popupNamePhoto.value = '';
     popupLinkPhoto.value = '';
     addElementOnPage(item);
-    popupClose(popupAddPhoto);
+    closePopup(popupAddPhoto);
   }
 }
 
@@ -86,22 +86,22 @@ initialCards.forEach(item => {
 btnEdit.addEventListener('click', () => {
   popupNameProfile.value = nameProfile.textContent;
   popupDescProfile.value = descProfile.textContent;
-  popupOpen(popupEditProfile);
+  openPopup(popupEditProfile);
 })
 
 btnAdd.addEventListener('click', () => {
-  popupOpen(popupAddPhoto);
+  openPopup(popupAddPhoto);
 })
 
 btnsClose.forEach(btnClose => {
   btnClose.addEventListener('click', () => {
-    popupClose(popupEditProfile);
-    popupClose(popupAddPhoto);
-    popupClose(popupViewPhoto);
+    closePopup(popupEditProfile);
+    closePopup(popupAddPhoto);
+    closePopup(popupViewPhoto);
   })
 })
 
-popupEditProfile.addEventListener('submit', formSubmitHandler);
+popupEditProfile.addEventListener('submit', submitFormHandler);
 popupAddPhoto.addEventListener('submit', addFormSubmitHandler);
 
 elementParent.addEventListener('click', (evt) => {
@@ -115,6 +115,6 @@ elementParent.addEventListener('click', (evt) => {
     popupViewPhoto.querySelector('.popup__image').src = evt.target.src;
     popupViewPhoto.querySelector('.popup__image').alt = evt.target.alt;
     popupViewPhoto.querySelector('.popup__title-image').textContent = evt.target.alt;
-    popupOpen(popupViewPhoto);
+    openPopup(popupViewPhoto);
   }
 })
