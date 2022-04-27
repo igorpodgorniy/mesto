@@ -30,6 +30,7 @@ const btnAdd = document.querySelector('.profile__add-button');
 const btnsClose = document.querySelectorAll('.popup__close');
 const popupEditProfile = document.querySelector('#popupEditProfile');
 const popupAddPhoto = document.querySelector('#popupAddPhoto');
+const popupViewPhoto = document.querySelector('#popupViewPhoto');
 const nameProfile = document.querySelector('.profile__title');
 const descProfile = document.querySelector('.profile__subtitle');
 const popupNameProfile = document.querySelector('#nameProfile');
@@ -53,9 +54,11 @@ function popupClose(popupId) {
 
 function formSubmitHandler(event) {
   event.preventDefault();
-  nameProfile.textContent = popupNameProfile.value;
-  descProfile.textContent = popupDescProfile.value;
-  popupClose(popupEditProfile);
+  if (popupNameProfile.value.trim() && popupDescProfile.value.trim()) {
+    nameProfile.textContent = popupNameProfile.value;
+    descProfile.textContent = popupDescProfile.value;
+    popupClose(popupEditProfile);
+  }
 }
 
 function addFormSubmitHandler(event) {
@@ -64,10 +67,12 @@ function addFormSubmitHandler(event) {
     name: popupNamePhoto.value,
     link: popupLinkPhoto.value
   };
-  popupNamePhoto.value = '';
-  popupLinkPhoto.value = '';
-  addElementOnPage(item);
-  popupClose(popupAddPhoto);
+  if (popupNamePhoto.value.trim() && popupLinkPhoto.value.trim()) {
+    popupNamePhoto.value = '';
+    popupLinkPhoto.value = '';
+    addElementOnPage(item);
+    popupClose(popupAddPhoto);
+  }
 }
 
 initialCards.forEach(item => {
@@ -88,6 +93,7 @@ btnsClose.forEach(btnClose => {
   btnClose.addEventListener('click', () => {
     popupClose(popupEditProfile);
     popupClose(popupAddPhoto);
+    popupClose(popupViewPhoto);
   })
 })
 
@@ -100,5 +106,11 @@ elementParent.addEventListener('click', (evt) => {
   }
   if (evt.target.classList.value.includes('elements__delete')) {
     evt.target.closest('.elements__item').remove();
+  }
+  if (evt.target.classList.value.includes('elements__image')) {
+    popupViewPhoto.querySelector('.popup__image').src = evt.target.src;
+    popupViewPhoto.querySelector('.popup__image').alt = evt.target.alt;
+    popupViewPhoto.querySelector('.popup__title-image').textContent = evt.target.alt;
+    popupViewPhoto.classList.add('popup_opened');
   }
 })

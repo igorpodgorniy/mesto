@@ -21,51 +21,9 @@
     </section>
     <section class="elements">
       <ul class="elements__items">
-        <!-- <li class="elements__item">
-          <img class="elements__image" src="./images/element-karachaevsk.jpg" alt="Сентинский храм в Карачаевске">
-          <div class="elements__info">
-            <h2 class="elements__title">Карачаевск</h2>
-            <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img class="elements__image" src="./images/element-elbrus.jpg" alt="Вид на гору Эльбрус издалека">
-          <div class="elements__info">
-            <h2 class="elements__title">Гора Эльбрус</h2>
-            <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img class="elements__image" src="./images/element-dombai.jpg" alt="Гора Домбай за лесом">
-          <div class="elements__info">
-            <h2 class="elements__title">Домбай</h2>
-            <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img class="elements__image" src="./images/element-gora-elbrus.jpg" alt="Заснеженая вершина горы Эльбрус">
-          <div class="elements__info">
-            <h2 class="elements__title">Гора Эльбрус</h2>
-            <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img class="elements__image" src="./images/element-dombai-vodopad.jpg" alt="Вид на водопад у горы Домбай">
-          <div class="elements__info">
-            <h2 class="elements__title">Домбай</h2>
-            <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img class="elements__image" src="./images/element-karachaevo-cherkessiya.jpg" alt="Гора в лёгком тумане в Карачаево-Черкессии">
-          <div class="elements__info">
-            <h2 class="elements__title">Карачаево-Черкессия</h2>
-            <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
-          </div>
-        </li> -->
         <template id="element">
           <li class="elements__item">
-            <img class="elements__image" src="./images/element-karachaevsk.jpg" alt="">
+            <img class="elements__image" src="" alt="">
             <div class="elements__info">
               <h2 class="elements__title"></h2>
               <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
@@ -96,6 +54,13 @@
       <button class="popup__button" type="submit" aria-label="Сохранить изменения в профиле">Создать</button>
       <button type="button" class="popup__close" aria-label="Закрыть форму добавления фотографии"></button>
     </form>
+  </div>
+  <div class="popup popup_dark" id="popupViewPhoto">
+    <div class="popup__box-image">
+      <img class="popup__image" src="./images/element-karachaevsk.jpg" alt="">
+      <h2 class="popup__title-image">Карачаевск</h2>
+      <button type="button" class="popup__close" aria-label="Закрыть окно просмотра фотографии"></button>
+    </div>
   </div>
   <script src="./scripts/index.js"></script>
 </body>
