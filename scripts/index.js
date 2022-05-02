@@ -27,7 +27,7 @@ const initialCards = [
 
 const btnEdit = document.querySelector('.profile__edit-button');
 const btnAdd = document.querySelector('.profile__add-button');
-const closeBtns = document.querySelectorAll('.popup__close');
+const buttonCloseList = document.querySelectorAll('.popup__close');
 const popupEditProfile = document.querySelector('#popupEditProfile');
 const popupAddPhoto = document.querySelector('#popupAddPhoto');
 const popupViewPhoto = document.querySelector('#popupViewPhoto');
@@ -85,8 +85,7 @@ function addFormSubmitHandler(evt) {
   };
   renderCard(item);
   closePopup(popupAddPhoto);
-  popupNamePhoto.value = '';
-  popupLinkPhoto.value = '';
+  popupAddPhoto.querySelector('#formAddPhoto').reset();
 }
 
 function openPhoto(photo) {
@@ -110,7 +109,7 @@ btnAdd.addEventListener('click', () => {
   openPopup(popupAddPhoto);
 })
 
-closeBtns.forEach(btnClose => {
+buttonCloseList.forEach(btnClose => {
   btnClose.addEventListener('click', (evt) => {
     closePopup(evt.target.closest('.popup'));
   })
