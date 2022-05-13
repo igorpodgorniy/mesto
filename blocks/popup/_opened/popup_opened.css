@@ -4,3 +4,7 @@
   height: auto;
   transition: visibility .2s, opacity .5s linear;
 }
+
+.popup_opened:hover {
+  cursor: pointer;
+}

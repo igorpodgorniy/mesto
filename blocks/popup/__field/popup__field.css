@@ -1,7 +1,7 @@
 .popup__field {
   position: relative;
   width: 100%;
-  margin-top: 29px;
+  margin-top: 35px;
 }
 
 .popup__field:first-of-type{
@@ -10,7 +10,6 @@
 
 @media screen and (max-width: 940px) {
   .popup__field {
-    padding-bottom: 8px;
-    margin-top: 30px;
+    margin-top: 50px;
   }
 }
