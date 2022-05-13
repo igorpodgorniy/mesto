@@ -33,10 +33,10 @@ const popupAddPhoto = document.querySelector('#popupAddPhoto');
 const popupViewPhoto = document.querySelector('#popupViewPhoto');
 const nameProfile = document.querySelector('.profile__title');
 const descProfile = document.querySelector('.profile__subtitle');
-const popupNameProfile = document.querySelector('#nameProfile');
-const popupDescProfile = document.querySelector('#descProfile');
-const popupNamePhoto = document.querySelector('#namePhoto');
-const popupLinkPhoto = document.querySelector('#linkPhoto');
+const popupNameProfile = document.querySelector('#name-profile-input');
+const popupDescProfile = document.querySelector('#desc-profile-input');
+const popupNamePhoto = document.querySelector('#name-photo-input');
+const popupLinkPhoto = document.querySelector('#link-photo-input');
 const elementTemplate = document.querySelector('#element').content;
 const elementParent = document.querySelector('.elements__items');
 
@@ -115,5 +115,5 @@ buttonCloseList.forEach(btnClose => {
   })
 })
 
-popupEditProfile.addEventListener('submit', submitFormHandler);
-popupAddPhoto.addEventListener('submit', addFormSubmitHandler);
+// popupEditProfile.addEventListener('submit', submitFormHandler);
+// popupAddPhoto.addEventListener('submit', addFormSubmitHandler);
