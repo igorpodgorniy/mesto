@@ -64,37 +64,42 @@ function renderCard(item) {
 
 function closePopup(popupId) {
   popupId.classList.remove('popup_opened');
+  const inputList = Array.from(popupId.querySelectorAll('.popup__input'));
+  inputList.forEach(inputElement => {
+    const errorElement = popupId.querySelector(`.${inputElement.id}-error`);
+    hideInputError(inputElement, errorElement, 'popup__input_type_error', 'popup__input-error');
+  })
+  popupEditProfile.querySelector('.popup__button').classList.remove('popup__button_inactive');
 }
 
 function closePopupByOverlay(popupId) {
   popupId.addEventListener('click', (evt) => {
-    if (!Array.from(evt.target.classList).includes('popup__container') && Array.from(evt.target.classList).includes('popup')) {
+    const targetClassList = Array.from(evt.target.classList);
+    if (!targetClassList.includes('popup__container') && targetClassList.includes('popup')) {
       closePopup(popupId);
     }
   })
 }
 
 function closePopupByEsc(popupId) {
-  document.addEventListener('keydown', evt => {
+  document.addEventListener('keydown', (evt) => {
     if (evt.key === 'Escape') {
       closePopup(popupId);
     }
-  })
+  }, {once: true})
 }
 
 function openPopup(popupId) {
   popupId.classList.add('popup_opened');
 }
 
-function submitFormHandler(evt) {
-  evt.preventDefault();
+function submitFormHandler() {
   nameProfile.textContent = popupNameProfile.value;
   descProfile.textContent = popupDescProfile.value;
   closePopup(popupEditProfile);
 }
 
-function addFormSubmitHandler(evt) {
-  evt.preventDefault();
+function addFormSubmitHandler() {
   const item = {
     name: popupNamePhoto.value,
     link: popupLinkPhoto.value
