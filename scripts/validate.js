@@ -46,11 +46,6 @@ const enableValidation = (objProps) => {
     const errorClass = objProps.errorClass;
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      if (evt.target.id === 'formEditProfile' && !hasInvalidInput(inputList)) {
-        submitFormHandler();
-      } else if (evt.target.id === 'formAddPhoto' && !hasInvalidInput(inputList)) {
-        addFormSubmitHandler();
-      }
       toggleButtonState(buttonElement, inputList);
     });
     inputList.forEach(inputElement => {

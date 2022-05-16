@@ -130,3 +130,6 @@ document.addEventListener('mousedown', (evt) => {
     closePopup(evt.target);
   }
 })
+
+popupEditProfile.addEventListener('submit', submitFormHandler);
+popupAddPhoto.addEventListener('submit', addFormSubmitHandler);
