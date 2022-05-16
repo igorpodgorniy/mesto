@@ -64,33 +64,19 @@ function renderCard(item) {
 
 function closePopup(popupId) {
   popupId.classList.remove('popup_opened');
-  const inputList = Array.from(popupId.querySelectorAll('.popup__input'));
-  inputList.forEach(inputElement => {
-    const errorElement = popupId.querySelector(`.${inputElement.id}-error`);
-    hideInputError(inputElement, errorElement, 'popup__input_type_error', 'popup__input-error');
-  })
-  popupEditProfile.querySelector('.popup__button').classList.remove('popup__button_inactive');
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
-function closePopupByOverlay(popupId) {
-  popupId.addEventListener('click', (evt) => {
-    const targetClassList = Array.from(evt.target.classList);
-    if (!targetClassList.includes('popup__container') && targetClassList.includes('popup')) {
-      closePopup(popupId);
-    }
-  })
-}
-
-function closePopupByEsc(popupId) {
-  document.addEventListener('keydown', (evt) => {
+function closePopupByEsc(evt) {
     if (evt.key === 'Escape') {
-      closePopup(popupId);
+      const openedPopup = document.querySelector('.popup_opened');
+      closePopup(openedPopup);
     }
-  }, {once: true})
 }
 
 function openPopup(popupId) {
   popupId.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 function submitFormHandler() {
@@ -114,7 +100,6 @@ function openPhoto(photo) {
   popupViewPhoto.querySelector('.popup__image').alt = photo.name;
   popupViewPhoto.querySelector('.popup__title-image').textContent = photo.name;
   openPopup(popupViewPhoto);
-  closePopupByOverlay(popupViewPhoto);
   closePopupByEsc(popupViewPhoto);
 }
 
@@ -126,13 +111,11 @@ btnEdit.addEventListener('click', () => {
   popupNameProfile.value = nameProfile.textContent;
   popupDescProfile.value = descProfile.textContent;
   openPopup(popupEditProfile);
-  closePopupByOverlay(popupEditProfile);
   closePopupByEsc(popupEditProfile);
 })
 
 btnAdd.addEventListener('click', () => {
   openPopup(popupAddPhoto);
-  closePopupByOverlay(popupAddPhoto);
   closePopupByEsc(popupAddPhoto);
 })
 
@@ -140,4 +123,10 @@ buttonCloseList.forEach(btnClose => {
   btnClose.addEventListener('click', (evt) => {
     closePopup(evt.target.closest('.popup'));
   })
+})
+
+document.addEventListener('mousedown', (evt) => {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
+  }
 })

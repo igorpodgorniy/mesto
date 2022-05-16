@@ -18,10 +18,10 @@ const checkInputValidity = (inputElement, errorElement, inputErrorClass, errorCl
   }
 };
 
-const setEventListeners = (inputElement, buttonElement, inputList, inactiveButtonClass, errorElement, inputErrorClass, errorClass) => {
+const setEventListeners = (inputElement, buttonElement, inputList, errorElement, inputErrorClass, errorClass) => {
   inputElement.addEventListener('input', function () {
     checkInputValidity(inputElement, errorElement, inputErrorClass, errorClass);
-    toggleButtonState(buttonElement, inputList, inactiveButtonClass);
+    toggleButtonState(buttonElement, inputList);
   });
 };
 
@@ -29,11 +29,11 @@ const hasInvalidInput = (inputList) => {
   return inputList.some(inputElement => !inputElement.validity.valid)
 };
 
-const toggleButtonState = (buttonElement, inputList, inactiveButtonClass) => {
+const toggleButtonState = (buttonElement, inputList) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.disabled = true;
   } else {
-    buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.disabled = false;
   }
 }
 
@@ -42,7 +42,6 @@ const enableValidation = (objProps) => {
   formList.forEach((formElement) => {
     const inputList = Array.from(formElement.querySelectorAll(objProps.inputSelector));
     const buttonElement = formElement.querySelector(objProps.submitButtonSelector);
-    const inactiveButtonClass = objProps.inactiveButtonClass;
     const inputErrorClass = objProps.inputErrorClass;
     const errorClass = objProps.errorClass;
     formElement.addEventListener('submit', (evt) => {
@@ -52,11 +51,11 @@ const enableValidation = (objProps) => {
       } else if (evt.target.id === 'formAddPhoto' && !hasInvalidInput(inputList)) {
         addFormSubmitHandler();
       }
-      toggleButtonState(buttonElement, inputList, inactiveButtonClass);
+      toggleButtonState(buttonElement, inputList);
     });
     inputList.forEach(inputElement => {
       const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-      setEventListeners(inputElement, buttonElement, inputList, inactiveButtonClass, errorElement, inputErrorClass, errorClass);
+      setEventListeners(inputElement, buttonElement, inputList, errorElement, inputErrorClass, errorClass);
     })
   });
 };
@@ -65,7 +64,6 @@ enableValidation({
   formSelector: '.popup__container',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error'
 });
