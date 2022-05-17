@@ -31,6 +31,8 @@ const buttonCloseList = document.querySelectorAll('.popup__close');
 const popupEditProfile = document.querySelector('#popupEditProfile');
 const popupAddPhoto = document.querySelector('#popupAddPhoto');
 const popupViewPhoto = document.querySelector('#popupViewPhoto');
+const formAddPhoto = popupAddPhoto.querySelector('#formAddPhoto');
+const formEditProfile = popupEditProfile.querySelector('#formEditProfile');
 const nameProfile = document.querySelector('.profile__title');
 const descProfile = document.querySelector('.profile__subtitle');
 const popupNameProfile = document.querySelector('#name-profile-input');
@@ -92,7 +94,7 @@ function addFormSubmitHandler() {
   };
   renderCard(item);
   closePopup(popupAddPhoto);
-  popupAddPhoto.querySelector('#formAddPhoto').reset();
+  formAddPhoto.reset();
 }
 
 function openPhoto(photo) {
@@ -131,5 +133,5 @@ document.addEventListener('mousedown', (evt) => {
   }
 })
 
-popupEditProfile.addEventListener('submit', submitFormHandler);
-popupAddPhoto.addEventListener('submit', addFormSubmitHandler);
+formEditProfile.addEventListener('submit', submitFormHandler);
+formAddPhoto.addEventListener('submit', addFormSubmitHandler);
