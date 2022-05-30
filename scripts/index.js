@@ -1,4 +1,5 @@
 import { FormValidator } from "./FormValidator.js";
+import { Card } from "./Card.js";
 
 const initialCards = [
   {
@@ -41,30 +42,30 @@ const popupNameProfile = document.querySelector('#name-profile-input');
 const popupDescProfile = document.querySelector('#desc-profile-input');
 const popupNamePhoto = document.querySelector('#name-photo-input');
 const popupLinkPhoto = document.querySelector('#link-photo-input');
-const elementTemplate = document.querySelector('#element').content;
-const elementParent = document.querySelector('.elements__items');
+// const elementTemplate = document.querySelector('#element').content;
+// const elementParent = document.querySelector('.elements__items');
 
-function createCard(item) {
-  const elementItem = elementTemplate.querySelector('.elements__item').cloneNode(true);
-  const elImage = elementItem.querySelector('.elements__image');
-  elImage.src = item.link;
-  elImage.alt = item.name;
-  elementItem.querySelector('.elements__title').textContent = item.name;
-  elImage.addEventListener('click', () => {
-    openPhoto(item);
-  })
-  elementItem.querySelector('.elements__heart').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('elements__heart_active');
-  })
-  elementItem.querySelector('.elements__delete').addEventListener('click', () => {
-    elementItem.remove();
-  })
-  return elementItem;
-}
+// function createCard(item) {
+//   const elementItem = elementTemplate.querySelector('.elements__item').cloneNode(true);
+//   const elImage = elementItem.querySelector('.elements__image');
+//   elImage.src = item.link;
+//   elImage.alt = item.name;
+//   elementItem.querySelector('.elements__title').textContent = item.name;
+//   elImage.addEventListener('click', () => {
+//     openPhoto(item);
+//   })
+//   elementItem.querySelector('.elements__heart').addEventListener('click', (evt) => {
+//     evt.target.classList.toggle('elements__heart_active');
+//   })
+//   elementItem.querySelector('.elements__delete').addEventListener('click', () => {
+//     elementItem.remove();
+//   })
+//   return elementItem;
+// }
 
-function renderCard(item) {
-  elementParent.prepend(createCard(item));
-}
+// function renderCard(item) {
+//   elementParent.prepend(createCard(item));
+// }
 
 function closePopup(popupId) {
   popupId.classList.remove('popup_opened');
@@ -90,25 +91,27 @@ function submitFormHandler() {
 }
 
 function addFormSubmitHandler() {
-  const item = {
-    name: popupNamePhoto.value,
-    link: popupLinkPhoto.value
-  };
-  renderCard(item);
+  const itemPhoto = new Card (popupNamePhoto.value, popupLinkPhoto.value, '.elements__item')
+  // const item = {
+  //   name: popupNamePhoto.value,
+  //   link: popupLinkPhoto.value
+  // };
+  itemPhoto.renderCard();
   closePopup(popupAddPhoto);
   formAddPhoto.reset();
 }
 
-function openPhoto(photo) {
-  popupViewPhoto.querySelector('.popup__image').src = photo.link;
-  popupViewPhoto.querySelector('.popup__image').alt = photo.name;
-  popupViewPhoto.querySelector('.popup__title-image').textContent = photo.name;
-  openPopup(popupViewPhoto);
-  closePopupByEsc(popupViewPhoto);
-}
+// function openPhoto(photo) {
+//   popupViewPhoto.querySelector('.popup__image').src = photo.link;
+//   popupViewPhoto.querySelector('.popup__image').alt = photo.name;
+//   popupViewPhoto.querySelector('.popup__title-image').textContent = photo.name;
+//   openPopup(popupViewPhoto);
+//   closePopupByEsc(popupViewPhoto);
+// }
 
 initialCards.forEach(item => {
-  renderCard(item);
+  const itemPhoto = new Card(item.name, item.link, '.elements__item');
+  itemPhoto.renderCard();
 })
 
 btnEdit.addEventListener('click', () => {
@@ -138,6 +141,8 @@ document.addEventListener('mousedown', (evt) => {
 formEditProfile.addEventListener('submit', submitFormHandler);
 formAddPhoto.addEventListener('submit', addFormSubmitHandler);
 
+
+// Включение валидации форм
 const photoForm = new FormValidator({
   formSelector: '#formAddPhoto',
   inputSelector: '.popup__input',
