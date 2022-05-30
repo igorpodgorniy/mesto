@@ -1,3 +1,5 @@
+import { FormValidator } from "./FormValidator.js";
+
 const initialCards = [
   {
     name: 'Архыз',
@@ -135,3 +137,22 @@ document.addEventListener('mousedown', (evt) => {
 
 formEditProfile.addEventListener('submit', submitFormHandler);
 formAddPhoto.addEventListener('submit', addFormSubmitHandler);
+
+const photoForm = new FormValidator({
+  formSelector: '#formAddPhoto',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error'
+});
+
+const profileForm = new FormValidator({
+  formSelector: '#formEditProfile',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error'
+});
+
+photoForm.enableValidation();
+profileForm.enableValidation();
