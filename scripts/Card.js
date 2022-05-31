@@ -1,48 +1,68 @@
 export class Card {
   constructor(name, link, templateSelector) {
-    this.templateSelector = templateSelector;
-    this.name = name;
-    this.link = link;
-    this.elementItem = null;
+    this._templateSelector = templateSelector;
+    this._name = name;
+    this._link = link;
+    this._elementItem = null;
   }
 
-  createCard() {
+  _createCard() {
     const elementTemplate = document.querySelector('#element').content;
-    this.elementItem = elementTemplate.querySelector(this.templateSelector).cloneNode(true);
-    const elImage = this.elementItem.querySelector('.elements__image');
-    elImage.src = this.link;
-    elImage.alt = this.name;
-    this.elementItem.querySelector('.elements__title').textContent = this.name;
+    this._elementItem = elementTemplate.querySelector(this._templateSelector).cloneNode(true);
+    const elImage = this._elementItem.querySelector('.elements__image');
+    elImage.src = this._link;
+    elImage.alt = this._name;
+    this._elementItem.querySelector('.elements__title').textContent = this._name;
     elImage.addEventListener('click', () => {
-      this.openPhoto();
+      this._openPhoto();
     })
-    this.elementItem.querySelector('.elements__heart').addEventListener('click', this.clickLike);
-    this.elementItem.querySelector('.elements__delete').addEventListener('click', () => {
-      this.clickDelete()
+    this._elementItem.querySelector('.elements__heart').addEventListener('click', this._clickLike);
+    this._elementItem.querySelector('.elements__delete').addEventListener('click', () => {
+      this._clickDelete()
     });
-    return this.elementItem;
+    return this._elementItem;
   }
 
-  clickLike(evt) {
+  _clickLike(evt) {
     evt.target.classList.toggle('elements__heart_active');
   }
 
-  clickDelete() {
-    this.elementItem.remove();
-    this.elementItem = null;
+  _clickDelete() {
+    this._elementItem.remove();
+    this._elementItem = null;
   }
 
   renderCard() {
     const elementParent = document.querySelector('.elements__items');
-    elementParent.prepend(this.createCard());
+    elementParent.prepend(this._createCard());
   }
 
-  openPhoto() {
+  _openPhoto() {
     const popupViewPhoto = document.querySelector('#popupViewPhoto');
-    popupViewPhoto.querySelector('.popup__image').src = this.link;
-    popupViewPhoto.querySelector('.popup__image').alt = this.name;
-    popupViewPhoto.querySelector('.popup__title-image').textContent = this.name;
-    openPopup(popupViewPhoto);
-    closePopupByEsc(popupViewPhoto);
+    popupViewPhoto.querySelector('.popup__image').src = this._link;
+    popupViewPhoto.querySelector('.popup__image').alt = this._name;
+    popupViewPhoto.querySelector('.popup__title-image').textContent = this._name;
+    this._openPopup(popupViewPhoto);
+  }
+
+  _openPopup(popupId) {
+    popupId.classList.add('popup_opened');
+    document.addEventListener('keydown', (evt) => {
+      this._closePopupByEsc(evt);
+    });
+  }
+
+  _closePopup(popupId) {
+    popupId.classList.remove('popup_opened');
+    document.removeEventListener('keydown', (evt) => {
+      this._closePopupByEsc(evt);
+    });
+  }
+
+  _closePopupByEsc(evt) {
+    if (evt.key === 'Escape') {
+      const openedPopup = document.querySelector('.popup_opened');
+      this._closePopup(openedPopup);
+    }
   }
 }
