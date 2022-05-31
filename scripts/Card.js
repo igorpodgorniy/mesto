@@ -9,25 +9,25 @@ export class Card {
   _createCard() {
     const elementTemplate = document.querySelector('#element').content;
     this._elementItem = elementTemplate.querySelector(this._templateSelector).cloneNode(true);
-    const elImage = this._elementItem.querySelector('.elements__image');
+    const elImage = this._elementItem.querySelector('.card__image');
     elImage.src = this._link;
     elImage.alt = this._name;
-    this._elementItem.querySelector('.elements__title').textContent = this._name;
+    this._elementItem.querySelector('.card__title').textContent = this._name;
     elImage.addEventListener('click', () => {
       this._openPhoto();
     })
-    this._elementItem.querySelector('.elements__heart').addEventListener('click', this._clickLike);
-    this._elementItem.querySelector('.elements__delete').addEventListener('click', () => {
-      this._clickDelete()
+    this._elementItem.querySelector('.card__heart').addEventListener('click', this._handleClickLike);
+    this._elementItem.querySelector('.card__delete').addEventListener('click', () => {
+      this._handleClickDelete()
     });
     return this._elementItem;
   }
 
-  _clickLike(evt) {
-    evt.target.classList.toggle('elements__heart_active');
+  _handleClickLike(evt) {
+    evt.target.classList.toggle('card__heart_active');
   }
 
-  _clickDelete() {
+  _handleClickDelete() {
     this._elementItem.remove();
     this._elementItem = null;
   }

@@ -31,11 +31,29 @@
     <form class="popup__container" method="post" name="formProfileInfo" id="formEditProfile" novalidate>
       <h2 class="popup__title">Редактировать профиль</h2>
       <label class="popup__field">
-        <input class="popup__input" type="text" id="name-profile-input" name="name" placeholder="Имя" minlength="2" maxlength="40" required>
+        <input
+          class="popup__input"
+          type="text"
+          id="name-profile-input"
+          name="name"
+          placeholder="Имя"
+          minlength="2"
+          maxlength="40"
+          required
+        >
         <span class="name-profile-input-error popup__input-error"></span>
       </label>
       <label class="popup__field">
-        <input class="popup__input" type="text" id="desc-profile-input" name="about" placeholder="О себе" minlength="2" maxlength="200" required>
+        <input
+          class="popup__input"
+          type="text"
+          id="desc-profile-input"
+          name="about"
+          placeholder="О себе"
+          minlength="2"
+          maxlength="200"
+          required
+        >
         <span class="desc-profile-input-error popup__input-error"></span>
       </label>
       <button class="popup__button" type="submit" aria-label="Сохранить изменения в профиле">Сохранить</button>
@@ -46,11 +64,27 @@
     <form class="popup__container" method="post" name="formAddPhoto" id="formAddPhoto" novalidate>
       <h2 class="popup__title">Новое место</h2>
       <label class="popup__field">
-        <input class="popup__input" type="text" id="name-photo-input" name="name" placeholder="Название" minlength="2" maxlength="30" required>
+        <input
+          class="popup__input"
+          type="text"
+          id="name-photo-input"
+          name="name"
+          placeholder="Название"
+          minlength="2"
+          maxlength="30"
+          required
+        >
         <span class="name-photo-input-error popup__input-error"></span>
       </label>
       <label class="popup__field">
-        <input class="popup__input" type="url" id="link-photo-input" name="link" placeholder="Ссылка на картинку" required>
+        <input
+          class="popup__input"
+          type="url"
+          id="link-photo-input"
+          name="link"
+          placeholder="Ссылка на картинку"
+          required
+        >
         <span class="link-photo-input-error popup__input-error"></span>
       </label>
       <button class="popup__button" type="submit" aria-label="Добавить фотографию" disabled>Создать</button>
@@ -65,13 +99,13 @@
     </div>
   </div>
   <template id="element">
-    <li class="elements__item">
-      <img class="elements__image" src="ссылка_на_фото.jpg" alt="Тексотове описание фотографии">
-      <div class="elements__info">
-        <h2 class="elements__title"></h2>
-        <button type="button" class="elements__heart" aria-label="Поставить лайк"></button>
+    <li class="card">
+      <img class="card__image" src="ссылка_на_фото.jpg" alt="Тексотове описание фотографии">
+      <div class="card__info">
+        <h2 class="card__title"></h2>
+        <button type="button" class="card__heart" aria-label="Поставить лайк"></button>
       </div>
-      <button type="button" class="elements__delete" aria-label="Удалить фотографию"></button>
+      <button type="button" class="card__delete" aria-label="Удалить фотографию"></button>
     </li>
   </template>
   <script type="module" src="./scripts/index.js"></script>

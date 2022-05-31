@@ -67,14 +67,14 @@ function submitFormHandler() {
 }
 
 function addFormSubmitHandler() {
-  const itemPhoto = new Card (popupNamePhoto.value, popupLinkPhoto.value, '.elements__item')
+  const itemPhoto = new Card (popupNamePhoto.value, popupLinkPhoto.value, '.card')
   itemPhoto.renderCard();
   closePopup(popupAddPhoto);
   formAddPhoto.reset();
 }
 
 initialCards.forEach(item => {
-  const itemPhoto = new Card(item.name, item.link, '.elements__item');
+  const itemPhoto = new Card(item.name, item.link, '.card');
   itemPhoto.renderCard();
 })
 
