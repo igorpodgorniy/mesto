@@ -1,50 +1,10 @@
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
-
-// Поиск необходимых элементов на странице
-const btnEdit = document.querySelector('.profile__edit-button');
-const btnAdd = document.querySelector('.profile__add-button');
-const buttonCloseList = document.querySelectorAll('.popup__close');
-const popupEditProfile = document.querySelector('#popupEditProfile');
-const popupAddPhoto = document.querySelector('#popupAddPhoto');
-const formAddPhoto = popupAddPhoto.querySelector('#formAddPhoto');
-const formEditProfile = popupEditProfile.querySelector('#formEditProfile');
-const nameProfile = document.querySelector('.profile__title');
-const descProfile = document.querySelector('.profile__subtitle');
-const popupNameProfile = document.querySelector('#name-profile-input');
-const popupDescProfile = document.querySelector('#desc-profile-input');
-const popupNamePhoto = document.querySelector('#name-photo-input');
-const popupLinkPhoto = document.querySelector('#link-photo-input');
+import * as data from "./constants.js";
 
 function closePopup(popupId) {
   popupId.classList.remove('popup_opened');
+  document.removeEventListener('mousedown', handlePopupClose)
   document.removeEventListener('keydown', closePopupByEsc);
 }
 
@@ -57,71 +17,75 @@ function closePopupByEsc(evt) {
 
 function openPopup(popupId) {
   popupId.classList.add('popup_opened');
+  document.addEventListener('mousedown', handlePopupClose)
   document.addEventListener('keydown', closePopupByEsc);
 }
 
-function submitFormHandler() {
-  nameProfile.textContent = popupNameProfile.value;
-  descProfile.textContent = popupDescProfile.value;
+function handleSubmitForm() {
+  data.nameProfile.textContent = data.popupNameProfile.value;
+  data.descProfile.textContent = data.popupDescProfile.value;
   closePopup(popupEditProfile);
 }
 
-function addFormSubmitHandler() {
-  const itemPhoto = new Card (popupNamePhoto.value, popupLinkPhoto.value, '.card')
-  itemPhoto.renderCard();
-  closePopup(popupAddPhoto);
-  formAddPhoto.reset();
+function createAndRenderCard(name, link, selector) {
+  const itemPhoto = new Card (name, link, selector);
+  renderCard(itemPhoto.createCard());
 }
 
-initialCards.forEach(item => {
-  const itemPhoto = new Card(item.name, item.link, '.card');
-  itemPhoto.renderCard();
+function handleAddFormSubmit() {
+  createAndRenderCard(data.popupNamePhoto.value, data.popupLinkPhoto.value, '.card');
+  closePopup(data.popupAddPhoto);
+  data.formAddPhoto.reset();
+}
+
+function handlePopupClose(evt) {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
+  }
+}
+
+function renderCard(item) {
+  data.elementParent.prepend(item);
+}
+
+data.initialCards.forEach(item => {
+  createAndRenderCard(item.name, item.link, '.card');
 })
 
-btnEdit.addEventListener('click', () => {
-  popupNameProfile.value = nameProfile.textContent;
-  popupDescProfile.value = descProfile.textContent;
-  openPopup(popupEditProfile);
-  closePopupByEsc(popupEditProfile);
+data.btnEdit.addEventListener('click', () => {
+  data.popupNameProfile.value = data.nameProfile.textContent;
+  data.popupDescProfile.value = data.descProfile.textContent;
+  openPopup(data.popupEditProfile);
+  closePopupByEsc(data.popupEditProfile);
 })
 
-btnAdd.addEventListener('click', () => {
-  openPopup(popupAddPhoto);
-  closePopupByEsc(popupAddPhoto);
+data.btnAdd.addEventListener('click', () => {
+  openPopup(data.popupAddPhoto);
+  closePopupByEsc(data.popupAddPhoto);
 })
 
-buttonCloseList.forEach(btnClose => {
+data.buttonCloseList.forEach(btnClose => {
   btnClose.addEventListener('click', (evt) => {
     closePopup(evt.target.closest('.popup'));
   })
 })
 
-document.addEventListener('mousedown', (evt) => {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
-  }
-})
-
-formEditProfile.addEventListener('submit', submitFormHandler);
-formAddPhoto.addEventListener('submit', addFormSubmitHandler);
+data.formEditProfile.addEventListener('submit', handleSubmitForm);
+data.formAddPhoto.addEventListener('submit', handleAddFormSubmit);
 
 
 // Включение валидации форм
 const photoForm = new FormValidator({
   formSelector: '#formAddPhoto',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error'
+  ...data.configFormForValidation
 });
 
 const profileForm = new FormValidator({
   formSelector: '#formEditProfile',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error'
+  ...data.configFormForValidation
 });
 
 photoForm.enableValidation();
 profileForm.enableValidation();
+
+export { openPopup }
