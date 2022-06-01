@@ -1,10 +1,27 @@
 import { FormValidator } from "./FormValidator.js";
 import { Card } from "./Card.js";
-import * as data from "./constants.js";
+import { 
+  popupNameProfile,
+  popupDescProfile,
+  popupNamePhoto,
+  popupLinkPhoto,
+  nameProfile,
+  descProfile,
+  popupAddPhoto,
+  formAddPhoto,
+  elementParent,
+  initialCards,
+  btnEdit,
+  popupEditProfile,
+  btnAdd,
+  formEditProfile,
+  buttonCloseList,
+  configFormForValidation
+ } from "./constants.js";
 
 function closePopup(popupId) {
   popupId.classList.remove('popup_opened');
-  document.removeEventListener('mousedown', handlePopupClose)
+  popupId.removeEventListener('mousedown', handlePopupClose)
   document.removeEventListener('keydown', closePopupByEsc);
 }
 
@@ -17,72 +34,70 @@ function closePopupByEsc(evt) {
 
 function openPopup(popupId) {
   popupId.classList.add('popup_opened');
-  document.addEventListener('mousedown', handlePopupClose)
+  popupId.addEventListener('mousedown', handlePopupClose)
   document.addEventListener('keydown', closePopupByEsc);
 }
 
 function handleSubmitForm() {
-  data.nameProfile.textContent = data.popupNameProfile.value;
-  data.descProfile.textContent = data.popupDescProfile.value;
+  nameProfile.textContent = popupNameProfile.value;
+  descProfile.textContent = popupDescProfile.value;
   closePopup(popupEditProfile);
 }
 
-function createAndRenderCard(name, link, selector) {
-  const itemPhoto = new Card (name, link, selector);
-  renderCard(itemPhoto.createCard());
+function createCard(name, link, selector) {
+  return new Card (name, link, selector);
 }
 
 function handleAddFormSubmit() {
-  createAndRenderCard(data.popupNamePhoto.value, data.popupLinkPhoto.value, '.card');
-  closePopup(data.popupAddPhoto);
-  data.formAddPhoto.reset();
+  renderCard(popupNamePhoto.value, popupLinkPhoto.value, '.card');
+  closePopup(popupAddPhoto);
+  formAddPhoto.reset();
 }
 
 function handlePopupClose(evt) {
-  if (evt.target.classList.contains('popup')) {
+  if (evt.target.classList.contains('popup_opened')) {
     closePopup(evt.target);
   }
 }
 
-function renderCard(item) {
-  data.elementParent.prepend(item);
+function renderCard(name, link, selector) {
+  const item = createCard(name, link, selector).createCard();
+  elementParent.prepend(item);
 }
 
-data.initialCards.forEach(item => {
-  createAndRenderCard(item.name, item.link, '.card');
+initialCards.forEach(item => {
+  renderCard(item.name, item.link, '.card');
 })
 
-data.btnEdit.addEventListener('click', () => {
-  data.popupNameProfile.value = data.nameProfile.textContent;
-  data.popupDescProfile.value = data.descProfile.textContent;
-  openPopup(data.popupEditProfile);
-  closePopupByEsc(data.popupEditProfile);
+btnEdit.addEventListener('click', () => {
+  popupNameProfile.value = nameProfile.textContent;
+  popupDescProfile.value = descProfile.textContent;
+  openPopup(popupEditProfile);
 })
 
-data.btnAdd.addEventListener('click', () => {
-  openPopup(data.popupAddPhoto);
-  closePopupByEsc(data.popupAddPhoto);
+btnAdd.addEventListener('click', () => {
+  openPopup(popupAddPhoto);
 })
 
-data.buttonCloseList.forEach(btnClose => {
+buttonCloseList.forEach(btnClose => {
   btnClose.addEventListener('click', (evt) => {
     closePopup(evt.target.closest('.popup'));
   })
 })
 
-data.formEditProfile.addEventListener('submit', handleSubmitForm);
-data.formAddPhoto.addEventListener('submit', handleAddFormSubmit);
+formEditProfile.addEventListener('submit', handleSubmitForm);
+formAddPhoto.addEventListener('submit', handleAddFormSubmit);
 
 
 // Включение валидации форм
 const photoForm = new FormValidator({
   formSelector: '#formAddPhoto',
-  ...data.configFormForValidation
+  ...configFormForValidation
 });
 
 const profileForm = new FormValidator({
   formSelector: '#formEditProfile',
-  ...data.configFormForValidation
+  ...configFormForValidation
 });
 
 photoForm.enableValidation();

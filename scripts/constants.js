@@ -49,3 +49,4 @@ export const popupLinkPhoto = document.querySelector('#link-photo-input');
 export const elementParent = document.querySelector('.elements__items');
 export const popupViewPhoto = document.querySelector('#popupViewPhoto');
 export const popupPhoto = popupViewPhoto.querySelector('.popup__image');
+export const popupPhotoTitle = popupViewPhoto.querySelector('.popup__title-image');
