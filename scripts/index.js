@@ -45,7 +45,8 @@ function handleSubmitForm() {
 }
 
 function createCard(name, link, selector) {
-  return new Card (name, link, selector);
+  const card = new Card(name, link, selector);
+  return card.createCard();
 }
 
 function handleAddFormSubmit() {
@@ -61,8 +62,7 @@ function handlePopupClose(evt) {
 }
 
 function renderCard(name, link, selector) {
-  const item = createCard(name, link, selector).createCard();
-  elementParent.prepend(item);
+  return elementParent.prepend(createCard(name, link, selector));
 }
 
 initialCards.forEach(item => {
