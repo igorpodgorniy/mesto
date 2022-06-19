@@ -62,6 +62,10 @@ function handlePopupClose(evt) {
   }
 }
 
+function renderCard(name, link, selector) {
+  return elementParent.prepend(createCard(name, link, selector));
+}
+
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
