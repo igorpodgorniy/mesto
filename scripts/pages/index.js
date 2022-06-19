@@ -1,3 +1,4 @@
+import { Section } from "../components/Section.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Card } from "../components/Card.js";
 import { 
@@ -61,13 +62,14 @@ function handlePopupClose(evt) {
   }
 }
 
-function renderCard(name, link, selector) {
-  return elementParent.prepend(createCard(name, link, selector));
-}
-
-initialCards.forEach(item => {
-  renderCard(item.name, item.link, '.card');
-})
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item.name, item.link, '.card');
+    const cardElement = card.createCard();
+    cardList.addItem(cardElement);
+  }
+}, '.elements__items');
 
 btnEdit.addEventListener('click', () => {
   popupNameProfile.value = nameProfile.textContent;
@@ -85,9 +87,10 @@ buttonCloseList.forEach(btnClose => {
   })
 })
 
+cardList.rendererAll();
+
 formEditProfile.addEventListener('submit', handleSubmitForm);
 formAddPhoto.addEventListener('submit', handleAddFormSubmit);
-
 
 // Включение валидации форм
 const photoForm = new FormValidator({
