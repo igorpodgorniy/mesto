@@ -1,5 +1,6 @@
-import { popupPhoto, popupPhotoTitle, popupViewPhoto } from "./constants.js";
-import { openPopup } from "./index.js";
+import { popupPhoto, popupPhotoTitle, popupViewPhoto } from "../utils/constants.js";
+import { openPopup } from "../pages/index.js";
+
 export class Card {
   constructor(name, link, templateSelector) {
     this._templateSelector = templateSelector;

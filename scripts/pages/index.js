@@ -1,5 +1,5 @@
-import { FormValidator } from "./FormValidator.js";
-import { Card } from "./Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { Card } from "../components/Card.js";
 import { 
   popupNameProfile,
   popupDescProfile,
@@ -17,7 +17,7 @@ import {
   formEditProfile,
   buttonCloseList,
   configFormForValidation
- } from "./constants.js";
+ } from "../utils/constants.js";
 
 function closePopup(popupId) {
   popupId.classList.remove('popup_opened');
