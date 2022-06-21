@@ -12,9 +12,9 @@ export class PopupWithForm extends Popup {
     const inputList = this._popup.querySelectorAll('.popup__input');
     const valueList = [];
     inputList.forEach(item => {
-      valueList.push(item);
+      valueList.push(item.value);
     });
-    return inputList;
+    return valueList;
   }
 
   setEventListeners = (evt) => {

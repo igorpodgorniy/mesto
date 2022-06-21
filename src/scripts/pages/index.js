@@ -3,6 +3,7 @@ import '../../pages/index.css';
 import { Section } from "../components/Section.js";
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from "../components/FormValidator.js";
 import { Card } from "../components/Card.js";
 import { 
@@ -10,23 +11,11 @@ import {
   popupDescProfile,
   popupNamePhoto,
   popupLinkPhoto,
-  nameProfile,
-  descProfile,
-  elementParent,
   initialCards,
   btnEdit,
   btnAdd,
   configFormForValidation
  } from "../utils/constants.js";
-
-function createCard(name, link, selector) {
-  const card = new Card(name, link, selector);
-  return card.createCard();
-}
-
-function renderCard(name, link, selector) {
-  return elementParent.prepend(createCard(name, link, selector));
-}
 
 const cardList = new Section({
   items: initialCards,
@@ -44,17 +33,25 @@ const cardList = new Section({
   }
 }, '.elements__items');
 
+const infoProfile = new UserInfo({
+  selectorNameUser: '.profile__title',
+  selectorAboutUser: '.profile__subtitle'
+})
+
+const popupEditProfile = new PopupWithForm(
+  '#popupEditProfile',
+  () => {
+    infoProfile.setUserInfo({
+      name: popupNameProfile.value,
+      about: popupDescProfile.value});
+    popupEditProfile.close();
+  }
+);
+
 btnEdit.addEventListener('click', () => {
-  popupNameProfile.value = nameProfile.textContent;
-  popupDescProfile.value = descProfile.textContent;
-  const popupEditProfile = new PopupWithForm(
-    '#popupEditProfile',
-    () => {
-      nameProfile.textContent = popupNameProfile.value;
-      descProfile.textContent = popupDescProfile.value;
-      popupEditProfile.close();
-    }
-  );
+  const userData = infoProfile.getUserInfo();
+  popupNameProfile.value = userData.name;
+  popupDescProfile.value = userData.about;
   popupEditProfile.open();
 })
 
@@ -74,13 +71,33 @@ const profileForm = new FormValidator({
 photoForm.enableValidation();
 profileForm.enableValidation();
 
-btnAdd.addEventListener('click', () => {
-  const popupAddPhoto = new PopupWithForm(
-    '#popupAddPhoto',
-    () => {
-      renderCard(popupNamePhoto.value, popupLinkPhoto.value, '.card');
-      popupAddPhoto.close();
+const popupAddPhoto = new PopupWithForm(
+  '#popupAddPhoto',
+  () => {
+    const item = {
+      name: popupNamePhoto.value,
+      link: popupLinkPhoto.value
     }
-  );
+    const cardItem = new Section({
+      items: [],
+      renderer: (item) => {
+        const card = new Card(
+          item.name,
+          item.link,
+          '.card',
+          () => {
+            const popupImage = new PopupWithImage('#popupViewPhoto');
+            popupImage.open(item.name, item.link);
+          });
+        const cardElement = card.createCard();
+        cardItem.addItem(cardElement);
+      }
+    }, '.elements__items');
+    cardItem.renderer(item);
+    popupAddPhoto.close();
+  }
+);
+
+btnAdd.addEventListener('click', () => {
   popupAddPhoto.open();
 })
