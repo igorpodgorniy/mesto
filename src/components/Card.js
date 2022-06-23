@@ -8,24 +8,28 @@ export class Card {
   }
 
   createCard() {
-    const elementTemplate = document.querySelector('#element').content;
-    this._elementItem = elementTemplate.querySelector(this._templateSelector).cloneNode(true);
-    const elImage = this._elementItem.querySelector('.card__image');
-    elImage.src = this._link;
-    elImage.alt = this._name;
+    this._elementItem = document
+      .querySelector(this._templateSelector)
+      .content
+      .querySelector('.card')
+      .cloneNode(true);
+    
+    this._image = this._elementItem.querySelector('.card__image');
+    this._image.src = this._link;
+    this._image.alt = this._name;
     this._elementItem.querySelector('.card__title').textContent = this._name;
-    this._setEventListeners(elImage);
-    this._elementItem.querySelector('.card__heart').addEventListener('click', this._handleClickLike);
-    this._elementItem.querySelector('.card__delete').addEventListener('click', () => {
-      this._handleClickDelete()
-    });
+    this._setEventListeners();
     return this._elementItem;
   }
 
-  _setEventListeners(element) {
-    element.addEventListener('click', () => {
-      this._handleCardClick();
-    })
+  _setEventListeners = () => {
+    this._image.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link);
+    });
+    this._elementItem.querySelector('.card__heart').addEventListener('click', this._handleClickLike);
+    this._elementItem.querySelector('.card__delete').addEventListener('click', () => {
+      this._handleClickDelete();
+    });
   }
 
   _handleClickLike(evt) {

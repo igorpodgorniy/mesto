@@ -9,29 +9,41 @@ import { Card } from "../components/Card.js";
 import { 
   popupNameProfile,
   popupDescProfile,
-  popupNamePhoto,
-  popupLinkPhoto,
   initialCards,
   btnEdit,
   btnAdd,
   configFormForValidation
  } from "../utils/constants.js";
 
-const cardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const card = new Card(
-      item.name,
-      item.link,
-      '.card',
-      () => {
-        const popupImage = new PopupWithImage('#popupViewPhoto');
-        popupImage.open(item.name, item.link);
-      });
-    const cardElement = card.createCard();
+ const popupImage = new PopupWithImage('#popupViewPhoto');
+
+function generateCard(item) {
+  const card = new Card(
+    item.name,
+    item.link,
+    '#element',
+    (name, link) => {
+      popupImage.setEventListeners();
+      popupImage.open(name, link);
+    });
+    return card.createCard();
+}
+
+const cardList = new Section(
+  (item) => {
+    const cardElement = generateCard(item);
     cardList.addItem(cardElement);
-  }
-}, '.elements__items');
+  },
+  '.elements__items'
+);
+
+const cardItem = new Section(
+  (item) => {
+    const cardElement = generateCard(item);
+    cardItem.addItem(cardElement);
+  },
+  '.elements__items'
+);
 
 const infoProfile = new UserInfo({
   selectorNameUser: '.profile__title',
@@ -40,13 +52,26 @@ const infoProfile = new UserInfo({
 
 const popupEditProfile = new PopupWithForm(
   '#popupEditProfile',
-  () => {
-    infoProfile.setUserInfo({
-      name: popupNameProfile.value,
-      about: popupDescProfile.value});
+  ({name, about}) => {
+    infoProfile.setUserInfo({name, about});
     popupEditProfile.close();
   }
 );
+popupEditProfile.setEventListeners();
+
+const popupAddPhoto = new PopupWithForm(
+  '#popupAddPhoto',
+  ({name, link}) => {
+    cardItem.renderer({name, link});
+    popupAddPhoto.close();
+  }
+);
+
+popupAddPhoto.setEventListeners();
+
+btnAdd.addEventListener('click', () => {
+  popupAddPhoto.open();
+})
 
 btnEdit.addEventListener('click', () => {
   const userData = infoProfile.getUserInfo();
@@ -55,7 +80,7 @@ btnEdit.addEventListener('click', () => {
   popupEditProfile.open();
 })
 
-cardList.rendererAll();
+cardList.rendererAll(initialCards);
 
 // Включение валидации форм
 const photoForm = new FormValidator({
@@ -70,34 +95,3 @@ const profileForm = new FormValidator({
 
 photoForm.enableValidation();
 profileForm.enableValidation();
-
-const popupAddPhoto = new PopupWithForm(
-  '#popupAddPhoto',
-  () => {
-    const item = {
-      name: popupNamePhoto.value,
-      link: popupLinkPhoto.value
-    }
-    const cardItem = new Section({
-      items: [],
-      renderer: (item) => {
-        const card = new Card(
-          item.name,
-          item.link,
-          '.card',
-          () => {
-            const popupImage = new PopupWithImage('#popupViewPhoto');
-            popupImage.open(item.name, item.link);
-          });
-        const cardElement = card.createCard();
-        cardItem.addItem(cardElement);
-      }
-    }, '.elements__items');
-    cardItem.renderer(item);
-    popupAddPhoto.close();
-  }
-);
-
-btnAdd.addEventListener('click', () => {
-  popupAddPhoto.open();
-})

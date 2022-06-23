@@ -10,7 +10,7 @@ export class Popup {
     }
   }
 
-  _handlePopupClose = (evt) => {
+  _handlePopupClose(evt) {
     if (evt.target.classList.contains('popup_opened')) {
       this.close();
     }
@@ -18,18 +18,17 @@ export class Popup {
 
   open() {
     this._popup.classList.add('popup_opened');
-    this._popup.addEventListener('mousedown', this.setEventListeners);
+    this._popup.addEventListener('mousedown', (evt) => this._handlePopupClose(evt));
     document.addEventListener('keydown', this._handleEscClose);
   }
 
   close() {
     this._popup.classList.remove('popup_opened');
-    this._popup.removeEventListener('mousedown', this.setEventListeners);
+    this._popup.removeEventListener('mousedown', this._handlePopupClose);
     document.removeEventListener('keydown', this._handleEscClose);
   }
 
-  setEventListeners = (evt) => {
-    this._handlePopupClose(evt);
+  setEventListeners = () => {
     this._buttonClose.addEventListener('click', () => {
       this.close();
     });
