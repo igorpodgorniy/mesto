@@ -29,18 +29,10 @@ function generateCard(item) {
     return card.createCard();
 }
 
-const cardList = new Section(
+const photoCard = new Section(
   (item) => {
     const cardElement = generateCard(item);
-    cardList.addItem(cardElement);
-  },
-  '.elements__items'
-);
-
-const cardItem = new Section(
-  (item) => {
-    const cardElement = generateCard(item);
-    cardItem.addItem(cardElement);
+    photoCard.addItem(cardElement);
   },
   '.elements__items'
 );
@@ -62,7 +54,7 @@ popupEditProfile.setEventListeners();
 const popupAddPhoto = new PopupWithForm(
   '#popupAddPhoto',
   ({name, link}) => {
-    cardItem.renderer({name, link});
+    photoCard.renderer({name, link});
     popupAddPhoto.close();
   }
 );
@@ -80,7 +72,7 @@ btnEdit.addEventListener('click', () => {
   popupEditProfile.open();
 })
 
-cardList.rendererAll(initialCards);
+photoCard.rendererAll(initialCards);
 
 // Включение валидации форм
 const photoForm = new FormValidator({
