@@ -1,5 +1,6 @@
 import '../pages/index.css';
 
+import { Api } from '../components/Api.js';
 import { Section } from "../components/Section.js";
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
@@ -15,7 +16,17 @@ import {
   configFormForValidation
  } from "../utils/constants.js";
 
- const popupImage = new PopupWithImage('#popupViewPhoto');
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-44',
+  headers: {
+    authorization: '93f303b5-489a-4f9c-a73d-101d47521fd1',
+    'Content-Type': 'application/json'
+  }
+});
+
+// api.changeAvatar('https://pbs.twimg.com/profile_images/1403270647430721537/xta8iScl_400x400.jpg')
+
+const popupImage = new PopupWithImage('#popupViewPhoto');
 
 function generateCard(item) {
   const card = new Card(
