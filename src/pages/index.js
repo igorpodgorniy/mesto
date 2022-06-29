@@ -10,7 +10,6 @@ import { Card } from "../components/Card.js";
 import { 
   popupNameProfile,
   popupDescProfile,
-  initialCards,
   btnEdit,
   btnAdd,
   configFormForValidation
@@ -23,8 +22,6 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-
-// api.changeAvatar('https://pbs.twimg.com/profile_images/1403270647430721537/xta8iScl_400x400.jpg')
 
 const popupImage = new PopupWithImage('#popupViewPhoto');
 
@@ -58,7 +55,8 @@ const cardItem = new Section(
 
 const infoProfile = new UserInfo({
   selectorNameUser: '.profile__title',
-  selectorAboutUser: '.profile__subtitle'
+  selectorAboutUser: '.profile__subtitle',
+  selectorAvatarUser: '.profile__avatar'
 })
 
 const popupEditProfile = new PopupWithForm(
@@ -91,7 +89,24 @@ btnEdit.addEventListener('click', () => {
   popupEditProfile.open();
 })
 
-cardList.rendererAll(initialCards);
+api.getCards()
+  .then(res => {
+    cardList.rendererAll(res);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
+api.getUserInfo()
+  .then(res => {
+    console.log(res);
+    const { name, about, avatar } = res;
+    infoProfile.setUserInfo({name, about});
+    infoProfile.setUserAvatar(avatar);
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 // Включение валидации форм
 const photoForm = new FormValidator({
