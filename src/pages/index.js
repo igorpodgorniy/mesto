@@ -37,18 +37,10 @@ function generateCard(item) {
     return card.createCard();
 }
 
-const cardList = new Section(
+const photoCard = new Section(
   (item) => {
     const cardElement = generateCard(item);
-    cardList.addItem(cardElement);
-  },
-  '.elements__items'
-);
-
-const cardItem = new Section(
-  (item) => {
-    const cardElement = generateCard(item);
-    cardItem.addItem(cardElement);
+    photoCard.addItem(cardElement);
   },
   '.elements__items'
 );
@@ -82,7 +74,7 @@ const popupAddPhoto = new PopupWithForm(
     api.addCard({name, link})
       .then(res => {
         const { name, link } = res;
-        cardItem.renderer({name, link});
+        photoCard.renderer({name, link});
         popupAddPhoto.close();
       })
   }
