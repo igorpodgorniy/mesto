@@ -62,8 +62,16 @@ const infoProfile = new UserInfo({
 const popupEditProfile = new PopupWithForm(
   '#popupEditProfile',
   ({name, about}) => {
-    infoProfile.setUserInfo({name, about});
-    popupEditProfile.close();
+    api.editProfile({name, about})
+      .then(res => {
+        const { name, about } = res;
+        infoProfile.setUserInfo({name, about});
+        popupEditProfile.close();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    
   }
 );
 popupEditProfile.setEventListeners();
@@ -89,6 +97,7 @@ btnEdit.addEventListener('click', () => {
   popupEditProfile.open();
 })
 
+// Инициализация данных карточек и информации о пользователе
 api.getCards()
   .then(res => {
     cardList.rendererAll(res);
@@ -99,7 +108,6 @@ api.getCards()
 
 api.getUserInfo()
   .then(res => {
-    console.log(res);
     const { name, about, avatar } = res;
     infoProfile.setUserInfo({name, about});
     infoProfile.setUserAvatar(avatar);

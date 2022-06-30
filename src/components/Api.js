@@ -31,8 +31,8 @@ export class Api {
   }
 
   editProfile(newData) {
-   return fetch(`${this._baseUrl}/cards`, {
-      method: 'POST',
+   return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(newData)
     })
