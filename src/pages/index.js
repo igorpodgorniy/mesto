@@ -79,8 +79,12 @@ popupEditProfile.setEventListeners();
 const popupAddPhoto = new PopupWithForm(
   '#popupAddPhoto',
   ({name, link}) => {
-    cardItem.renderer({name, link});
-    popupAddPhoto.close();
+    api.addCard({name, link})
+      .then(res => {
+        const { name, link } = res;
+        cardItem.renderer({name, link});
+        popupAddPhoto.close();
+      })
   }
 );
 
