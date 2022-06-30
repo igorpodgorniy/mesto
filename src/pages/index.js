@@ -74,7 +74,8 @@ const popupAddPhoto = new PopupWithForm(
     api.addCard({name, link})
       .then(res => {
         const { name, link } = res;
-        photoCard.renderer({name, link});
+        const cardElement = generateCard({name, link});
+        photoCard.addItem(cardElement, true);
         popupAddPhoto.close();
       })
   }
@@ -96,7 +97,7 @@ btnEdit.addEventListener('click', () => {
 // Инициализация данных карточек и информации о пользователе
 api.getCards()
   .then(res => {
-    cardList.rendererAll(res);
+    photoCard.rendererAll(res);
   })
   .catch(err => {
     console.log(err);
