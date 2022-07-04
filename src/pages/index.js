@@ -10,6 +10,7 @@ import { Card } from "../components/Card.js";
 import { 
   popupNameProfile,
   popupDescProfile,
+  btnEditAvatar,
   btnEdit,
   btnAdd,
   configFormForValidation
@@ -67,10 +68,24 @@ const popupEditProfile = new PopupWithForm(
       .catch(err => {
         console.log(err);
       });
-    
   }
 );
 popupEditProfile.setEventListeners();
+
+const popupEditAvatar = new PopupWithForm(
+  '#popupEditAvatar',
+  ({link}) => {
+    api.changeAvatar(link)
+      .then(res => {
+        infoProfile.setUserAvatar(res.avatar);
+        popupEditAvatar.close();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+)
+popupEditAvatar.setEventListeners();
 
 const popupAddPhoto = new PopupWithForm(
   '#popupAddPhoto',
@@ -96,6 +111,10 @@ btnEdit.addEventListener('click', () => {
   popupNameProfile.value = userData.name;
   popupDescProfile.value = userData.about;
   popupEditProfile.open();
+})
+
+btnEditAvatar.addEventListener('click', () => {
+  popupEditAvatar.open();
 })
 
 // Инициализация данных карточек и информации о пользователе
@@ -129,5 +148,11 @@ const profileForm = new FormValidator({
   ...configFormForValidation
 });
 
+const avatarForm = new FormValidator({
+  formSelector: '#formEditAvatar',
+  ...configFormForValidation
+});
+
 photoForm.enableValidation();
 profileForm.enableValidation();
+avatarForm.enableValidation();

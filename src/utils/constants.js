@@ -35,11 +35,10 @@ export const configFormForValidation = {
 // Поиск необходимых элементов на странице
 export const btnEdit = document.querySelector('.profile__edit-button');
 export const btnAdd = document.querySelector('.profile__add-button');
+export const btnEditAvatar = document.querySelector('.profile__avatar');
 export const buttonCloseList = document.querySelectorAll('.popup__close');
 export const popupEditProfile = document.querySelector('#popupEditProfile');
 export const popupAddPhoto = document.querySelector('#popupAddPhoto');
-export const formAddPhoto = popupAddPhoto.querySelector('#formAddPhoto');
-export const formEditProfile = popupEditProfile.querySelector('#formEditProfile');
 export const nameProfile = document.querySelector('.profile__title');
 export const descProfile = document.querySelector('.profile__subtitle');
 export const popupNameProfile = document.querySelector('#name-profile-input');
