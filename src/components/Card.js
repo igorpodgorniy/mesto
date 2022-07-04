@@ -1,8 +1,10 @@
 export class Card {
-  constructor(name, link, templateSelector, handleCardClick) {
+  constructor(name, link, likes, isOwner, templateSelector, handleCardClick) {
     this._templateSelector = templateSelector;
     this._name = name;
     this._link = link;
+    this._likesArr = likes;
+    this._isOwner = isOwner;
     this._elementItem = null;
     this._handleCardClick = handleCardClick;
   }
@@ -14,11 +16,17 @@ export class Card {
       .querySelector('.card')
       .cloneNode(true);
     
+    this._btnDel = this._elementItem.querySelector('.card__delete');
     this._image = this._elementItem.querySelector('.card__image');
+    this._likeCounter = this._elementItem.querySelector('.card__like-counter');
     this._image.src = this._link;
     this._image.alt = this._name;
+    this._likesArr
+      ? this._likeCounter.textContent = this._likesArr.length
+      : this._likeCounter.textContent;
     this._elementItem.querySelector('.card__title').textContent = this._name;
     this._setEventListeners();
+    if(!this._isOwner) this._btnDel.remove();
     return this._elementItem;
   }
 

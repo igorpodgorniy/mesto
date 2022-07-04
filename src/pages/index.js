@@ -15,6 +15,8 @@ import {
   configFormForValidation
  } from "../utils/constants.js";
 
+let thisProfileId = '';
+
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-44',
   headers: {
@@ -29,6 +31,8 @@ function generateCard(item) {
   const card = new Card(
     item.name,
     item.link,
+    item.likes,
+    item.owner ? thisProfileId === item.owner._id : true,
     '#element',
     (name, link) => {
       popupImage.setEventListeners();
@@ -105,7 +109,8 @@ api.getCards()
 
 api.getUserInfo()
   .then(res => {
-    const { name, about, avatar } = res;
+    const { name, about, avatar, _id } = res;
+    thisProfileId = _id;
     infoProfile.setUserInfo({name, about});
     infoProfile.setUserAvatar(avatar);
   })
