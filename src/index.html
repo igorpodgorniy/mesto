@@ -10,7 +10,9 @@
   </header>
   <main>
     <section class="profile">
-      <img class="profile__avatar" src="" alt="Аватарка пользователя">
+      <div class="profile__avatar-container">
+        <img class="profile__avatar" src="" alt="Аватарка пользователя">
+      </div>
       <div class="profile__info">
         <h1 class="profile__title"></h1>
         <p class="profile__subtitle"></p>
@@ -135,7 +137,10 @@
         alt="Тексотове описание фотографии">
       <div class="card__info">
         <h2 class="card__title"></h2>
-        <button type="button" class="card__heart" aria-label="Поставить лайк"></button>
+        <div class="card__like-container">
+          <button type="button" class="card__heart" aria-label="Поставить лайк"></button>
+          <span class="card__like-counter">0</span>
+        </div>
       </div>
       <button type="button" class="card__delete" aria-label="Удалить фотографию"></button>
     </li>
