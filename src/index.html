@@ -101,6 +101,31 @@
       <button type="button" class="popup__close" aria-label="Закрыть окно просмотра фотографии"></button>
     </div>
   </div>
+  <div class="popup" id="popupDeletePhoto">
+    <div class="popup__container">
+      <h2 class="popup__title popup__title_input_zero">Вы уверены?</h2>
+      <button class="popup__button popup__button_only-button" type="button" aria-label="Подтверждение удаления фотографии">Да</button>
+      <button type="button" class="popup__close" aria-label="Закрыть форму удаления фотографии"></button>
+    </div>
+  </div>
+  <div class="popup" id="popupEditAvatar">
+    <form class="popup__container" method="post" name="formEditAvatar" id="formEditAvatar" novalidate>
+      <h2 class="popup__title popup__title_input_one">Обновить аватар</h2>
+      <label class="popup__field">
+        <input
+          class="popup__input"
+          type="url"
+          id="link-avatar-input"
+          name="link"
+          placeholder="Ссылка на аватар"
+          required
+        >
+        <span class="link-photo-input-error popup__input-error"></span>
+      </label>
+      <button class="popup__button" type="submit" aria-label="Обновить аватар" disabled>Сохранить</button>
+      <button type="button" class="popup__close" aria-label="Закрыть форму обновления аватара"></button>
+    </form>
+  </div>
   <template id="element">
     <li class="card">
       <img
