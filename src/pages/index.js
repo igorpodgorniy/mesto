@@ -34,7 +34,8 @@ function generateCard(item) {
     item.link,
     item._id,
     item.likes,
-    item.owner ? infoProfile.id === item.owner._id : true,
+    item.owner,
+    infoProfile.id,
     '#element',
     (name, link) => {
       popupImage.setEventListeners();
@@ -42,6 +43,13 @@ function generateCard(item) {
     },
     () => {
       popupDeletePhoto.open(card);
+    },
+    () => {
+      api.likePost(card._id, !card.isLiked)
+        .then((res) => {
+          card.setLike(res.likes);
+        })
+        .catch((err) => console.log(err.status));
     });
     return card.createCard();
 }
@@ -114,6 +122,7 @@ const popupAddPhoto = new PopupWithForm(
         const cardElement = generateCard(res);
         photoCard.addItem(cardElement, true);
         popupAddPhoto.close();
+        photoForm.toggleButtonState();
       })
   }
 );

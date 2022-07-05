@@ -69,7 +69,7 @@ export class Api {
       });
   }
 
-  lilePost(idCard, isLike) {
+  likePost(idCard, isLike) {
     const method = isLike ? 'PUT' : 'DELETE';
     return fetch(`${this._baseUrl}/cards/${idCard}/likes`, {
       method: method,
