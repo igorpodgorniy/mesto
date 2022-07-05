@@ -15,6 +15,7 @@ import {
   btnEdit,
   btnAdd,
   configFormForValidation,
+  submitButtonSelector,
   TOKEN
  } from "../utils/constants.js";
 
@@ -54,6 +55,14 @@ function generateCard(item) {
     return card.createCard();
 }
 
+function setBtnText (popupElement, button, loading, text) {
+  const btn = popupElement.querySelector(button);
+  if (loading) {
+    return (btn.textContent = text);
+  }
+  return (btn.textContent = text);
+};
+
 const photoCard = new Section(
   (item) => {
     const cardElement = generateCard(item);
@@ -71,6 +80,7 @@ const infoProfile = new UserInfo({
 const popupEditProfile = new PopupWithForm(
   '#popupEditProfile',
   ({name, about}) => {
+    setBtnText(popupEditProfile.form, submitButtonSelector, true, 'Сохранение...');
     api.editProfile({name, about})
       .then(res => {
         const { name, about } = res;
@@ -79,6 +89,9 @@ const popupEditProfile = new PopupWithForm(
       })
       .catch(err => {
         console.log(err);
+      })
+      .finally(() => {
+        setBtnText(popupEditProfile.form, submitButtonSelector, false, 'Сохранить');
       });
   }
 );
@@ -87,6 +100,7 @@ popupEditProfile.setEventListeners();
 const popupEditAvatar = new PopupWithForm(
   '#popupEditAvatar',
   ({link}) => {
+    setBtnText(popupEditAvatar.form, submitButtonSelector, true, 'Сохранение...');
     api.changeAvatar(link)
       .then(res => {
         infoProfile.setUserAvatar(res.avatar);
@@ -94,10 +108,34 @@ const popupEditAvatar = new PopupWithForm(
       })
       .catch(err => {
         console.log(err);
+      })
+      .finally(() => {
+        setBtnText(popupEditAvatar.form, submitButtonSelector, false, 'Сохранить');
       });
   }
 )
 popupEditAvatar.setEventListeners();
+
+const popupAddPhoto = new PopupWithForm(
+  '#popupAddPhoto',
+  ({name, link}) => {
+    setBtnText(popupAddPhoto.form, submitButtonSelector, true, 'Создание...');
+    api.addCard({name, link})
+      .then(res => {
+        const cardElement = generateCard(res);
+        photoCard.addItem(cardElement, true);
+        popupAddPhoto.close();
+        photoForm.toggleButtonState();
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        setBtnText(popupAddPhoto.form, submitButtonSelector, false, 'Создать');
+      });
+  }
+);
+popupAddPhoto.setEventListeners();
 
 const popupDeletePhoto = new PopupWithConfirmation(
   '#popupDeletePhoto',
@@ -109,24 +147,10 @@ const popupDeletePhoto = new PopupWithConfirmation(
       })
       .catch(err => {
         console.log(err);
-      });
-  }
-);
-popupDeletePhoto.setEventListeners();
-
-const popupAddPhoto = new PopupWithForm(
-  '#popupAddPhoto',
-  ({name, link}) => {
-    api.addCard({name, link})
-      .then(res => {
-        const cardElement = generateCard(res);
-        photoCard.addItem(cardElement, true);
-        popupAddPhoto.close();
-        photoForm.toggleButtonState();
       })
   }
 );
-popupAddPhoto.setEventListeners();
+popupDeletePhoto.setEventListeners();
 
 btnAdd.addEventListener('click', () => {
   popupAddPhoto.open();
