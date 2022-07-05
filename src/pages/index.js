@@ -1,12 +1,13 @@
 import '../pages/index.css';
 
 import { Api } from '../components/Api.js';
-import { Section } from "../components/Section.js";
+import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js';
 import { UserInfo } from '../components/UserInfo.js';
-import { FormValidator } from "../components/FormValidator.js";
-import { Card } from "../components/Card.js";
+import { FormValidator } from '../components/FormValidator.js';
+import { Card } from '../components/Card.js';
 import { 
   popupNameProfile,
   popupDescProfile,
@@ -32,12 +33,16 @@ function generateCard(item) {
   const card = new Card(
     item.name,
     item.link,
+    item._id,
     item.likes,
     item.owner ? thisProfileId === item.owner._id : true,
     '#element',
     (name, link) => {
       popupImage.setEventListeners();
       popupImage.open(name, link);
+    },
+    () => {
+      popupDeletePhoto.open(card);
     });
     return card.createCard();
 }
@@ -87,19 +92,32 @@ const popupEditAvatar = new PopupWithForm(
 )
 popupEditAvatar.setEventListeners();
 
+const popupDeletePhoto = new PopupWithConfirmation(
+  '#popupDeletePhoto',
+  (card) => {
+    api.deleteCard(card._id)
+      .then(() => card.deleteCard())
+      .then(() => {
+        popupDeletePhoto.close();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+);
+popupDeletePhoto.setEventListeners();
+
 const popupAddPhoto = new PopupWithForm(
   '#popupAddPhoto',
   ({name, link}) => {
     api.addCard({name, link})
       .then(res => {
-        const { name, link } = res;
-        const cardElement = generateCard({name, link});
+        const cardElement = generateCard(res);
         photoCard.addItem(cardElement, true);
         popupAddPhoto.close();
       })
   }
 );
-
 popupAddPhoto.setEventListeners();
 
 btnAdd.addEventListener('click', () => {
@@ -118,20 +136,14 @@ btnEditAvatar.addEventListener('click', () => {
 })
 
 // Инициализация данных карточек и информации о пользователе
-api.getCards()
-  .then(res => {
-    photoCard.rendererAll(res);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-api.getUserInfo()
-  .then(res => {
-    const { name, about, avatar, _id } = res;
+Promise.all([api.getCards(), api.getUserInfo()])
+  .then(([cardList, userInfo]) => {
+    const { name, about, avatar, _id } = userInfo;
     thisProfileId = _id;
     infoProfile.setUserInfo({name, about});
     infoProfile.setUserAvatar(avatar);
+
+    photoCard.rendererAll(cardList);
   })
   .catch(err => {
     console.log(err);
