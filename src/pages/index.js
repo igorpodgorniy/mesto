@@ -14,15 +14,14 @@ import {
   btnEditAvatar,
   btnEdit,
   btnAdd,
-  configFormForValidation
+  configFormForValidation,
+  TOKEN
  } from "../utils/constants.js";
-
-let thisProfileId = '';
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-44',
   headers: {
-    authorization: '93f303b5-489a-4f9c-a73d-101d47521fd1',
+    authorization: TOKEN,
     'Content-Type': 'application/json'
   }
 });
@@ -35,7 +34,7 @@ function generateCard(item) {
     item.link,
     item._id,
     item.likes,
-    item.owner ? thisProfileId === item.owner._id : true,
+    item.owner ? infoProfile.id === item.owner._id : true,
     '#element',
     (name, link) => {
       popupImage.setEventListeners();
@@ -139,8 +138,7 @@ btnEditAvatar.addEventListener('click', () => {
 Promise.all([api.getCards(), api.getUserInfo()])
   .then(([cardList, userInfo]) => {
     const { name, about, avatar, _id } = userInfo;
-    thisProfileId = _id;
-    infoProfile.setUserInfo({name, about});
+    infoProfile.setUserInfo({name, about, _id});
     infoProfile.setUserAvatar(avatar);
 
     photoCard.rendererAll(cardList);

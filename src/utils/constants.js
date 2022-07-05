@@ -1,30 +1,3 @@
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 export const configFormForValidation = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -49,3 +22,5 @@ export const elementParent = document.querySelector('.elements__items');
 export const popupViewPhoto = document.querySelector('#popupViewPhoto');
 export const popupPhoto = popupViewPhoto.querySelector('.popup__image');
 export const popupPhotoTitle = popupViewPhoto.querySelector('.popup__title-image');
+
+export const TOKEN = '93f303b5-489a-4f9c-a73d-101d47521fd1';
