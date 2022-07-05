@@ -63,9 +63,11 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => res.json())
-      .then((result) => {
-        console.log(result);
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
 
