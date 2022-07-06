@@ -9,12 +9,7 @@ export class Api {
       method: 'GET',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
   }
 
   getCards() {
@@ -22,12 +17,7 @@ export class Api {
       method: 'GET',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
   }
 
   editProfile(newData) {
@@ -36,12 +26,7 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify(newData)
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
   }
 
   addCard(newCard) {
@@ -50,12 +35,7 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify(newCard)
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
   }
 
   deleteCard(idCard) {
@@ -63,12 +43,7 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
   }
 
   likePost(idCard, isLike) {
@@ -77,12 +52,7 @@ export class Api {
       method: method,
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+    .then(this._checkResponse);
   }
 
   changeAvatar(avatarLink) {
@@ -91,11 +61,13 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify({ avatar: avatarLink })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(this._checkResponse);
+  }
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 }
