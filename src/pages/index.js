@@ -125,7 +125,6 @@ const popupAddPhoto = new PopupWithForm(
         const cardElement = generateCard(res);
         photoCard.addItem(cardElement, true);
         popupAddPhoto.close();
-        photoForm.toggleButtonState();
       })
       .catch(err => {
         console.log(err);
@@ -154,6 +153,7 @@ popupDeletePhoto.setEventListeners();
 
 btnAdd.addEventListener('click', () => {
   popupAddPhoto.open();
+  photoForm.toggleButtonState();
 })
 
 btnEdit.addEventListener('click', () => {
