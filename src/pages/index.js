@@ -153,7 +153,7 @@ popupDeletePhoto.setEventListeners();
 
 btnAdd.addEventListener('click', () => {
   popupAddPhoto.open();
-  photoForm.toggleButtonState();
+  photoForm.resetValidation();
 })
 
 btnEdit.addEventListener('click', () => {
@@ -165,7 +165,7 @@ btnEdit.addEventListener('click', () => {
 
 btnEditAvatar.addEventListener('click', () => {
   popupEditAvatar.open();
-  avatarForm.toggleButtonState();
+  avatarForm.resetValidation();
 })
 
 // Инициализация данных карточек и информации о пользователе
