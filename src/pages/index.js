@@ -148,8 +148,9 @@ btnAdd.addEventListener('click', () => {
 
 btnEdit.addEventListener('click', () => {
   const userData = infoProfile.getUserInfo();
-  popupNameProfile.value = userData.name;
-  popupDescProfile.value = userData.about;
+  popupEditProfile.setInputValues(userData)
+  // popupNameProfile.value = userData.name;
+  // popupDescProfile.value = userData.about;
   popupEditProfile.open();
   formValidators['formEditProfile'].resetValidation();
 })
