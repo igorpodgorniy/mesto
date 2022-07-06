@@ -165,6 +165,7 @@ btnEdit.addEventListener('click', () => {
 
 btnEditAvatar.addEventListener('click', () => {
   popupEditAvatar.open();
+  avatarForm.toggleButtonState();
 })
 
 // Инициализация данных карточек и информации о пользователе
