@@ -28,6 +28,7 @@ const api = new Api({
 });
 
 const popupImage = new PopupWithImage('#popupViewPhoto');
+popupImage.setEventListeners();
 
 function generateCard(item) {
   const card = new Card(
@@ -39,7 +40,6 @@ function generateCard(item) {
     infoProfile.id,
     '#element',
     (name, link) => {
-      popupImage.setEventListeners();
       popupImage.open(name, link);
     },
     () => {
