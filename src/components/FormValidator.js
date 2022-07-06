@@ -1,10 +1,10 @@
 export class FormValidator {
-  constructor(objProps) {
-    this._formElement = document.querySelector(objProps.formSelector);
-    this._inputList = Array.from(this._formElement.querySelectorAll(objProps.inputSelector));
-    this._buttonElement = this._formElement.querySelector(objProps.submitButtonSelector);
-    this._inputErrorClass = objProps.inputErrorClass;
-    this._errorClass = objProps.errorClass;
+  constructor(formElement, {inputSelector, submitButtonSelector, inputErrorClass, errorClass}) {
+    this._formElement = formElement;
+    this._inputList = Array.from(this._formElement.querySelectorAll(inputSelector));
+    this._buttonElement = this._formElement.querySelector(submitButtonSelector);
+    this._inputErrorClass = inputErrorClass;
+    this._errorClass = errorClass;
   }
 
   enableValidation() {

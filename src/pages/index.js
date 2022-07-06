@@ -143,7 +143,7 @@ popupDeletePhoto.setEventListeners();
 
 btnAdd.addEventListener('click', () => {
   popupAddPhoto.open();
-  photoForm.resetValidation();
+  formValidators['formAddPhoto'].resetValidation();
 })
 
 btnEdit.addEventListener('click', () => {
@@ -151,12 +151,12 @@ btnEdit.addEventListener('click', () => {
   popupNameProfile.value = userData.name;
   popupDescProfile.value = userData.about;
   popupEditProfile.open();
-  profileForm.resetValidation();
+  formValidators['formEditProfile'].resetValidation();
 })
 
 btnEditAvatar.addEventListener('click', () => {
   popupEditAvatar.open();
-  avatarForm.resetValidation();
+  formValidators['formEditAvatar'].resetValidation();
 })
 
 // Инициализация данных карточек и информации о пользователе
@@ -169,22 +169,16 @@ Promise.all([api.getCards(), api.getUserInfo()])
     console.log(err);
   });
 
-// Включение валидации форм
-const photoForm = new FormValidator({
-  formSelector: '#formAddPhoto',
-  ...configFormForValidation
-});
+const formValidators = {}
+// Включение валидации
+function enableValidation(config) {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach(formElement => {
+    const formName = formElement.getAttribute('name');
+    const validator = new FormValidator(formElement, {...config})
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 
-const profileForm = new FormValidator({
-  formSelector: '#formEditProfile',
-  ...configFormForValidation
-});
-
-const avatarForm = new FormValidator({
-  formSelector: '#formEditAvatar',
-  ...configFormForValidation
-});
-
-photoForm.enableValidation();
-profileForm.enableValidation();
-avatarForm.enableValidation();
+enableValidation(configFormForValidation);
