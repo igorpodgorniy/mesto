@@ -151,6 +151,7 @@ btnEdit.addEventListener('click', () => {
   popupNameProfile.value = userData.name;
   popupDescProfile.value = userData.about;
   popupEditProfile.open();
+  profileForm.resetValidation();
 })
 
 btnEditAvatar.addEventListener('click', () => {
