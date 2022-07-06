@@ -74,8 +74,7 @@ const popupEditProfile = new PopupWithForm(
     popupEditProfile.renderLoading(true, 'Сохранение...');
     api.editProfile({name, about})
       .then(res => {
-        const { name, about } = res;
-        infoProfile.setUserInfo({name, about});
+        infoProfile.setUserInfo(res);
         popupEditProfile.close();
       })
       .catch(err => {
@@ -94,7 +93,7 @@ const popupEditAvatar = new PopupWithForm(
     popupEditAvatar.renderLoading(true, 'Сохранение...');
     api.changeAvatar(link)
       .then(res => {
-        infoProfile.setUserAvatar(res.avatar);
+        infoProfile.setUserInfo(res);
         popupEditAvatar.close();
       })
       .catch(err => {
@@ -162,10 +161,7 @@ btnEditAvatar.addEventListener('click', () => {
 // Инициализация данных карточек и информации о пользователе
 Promise.all([api.getCards(), api.getUserInfo()])
   .then(([cardList, userInfo]) => {
-    const { name, about, avatar, _id } = userInfo;
-    infoProfile.setUserInfo({name, about, _id});
-    infoProfile.setUserAvatar(avatar);
-
+    infoProfile.setUserInfo(userInfo);
     photoCard.rendererAll(cardList);
   })
   .catch(err => {
