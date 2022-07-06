@@ -15,7 +15,6 @@ import {
   btnEdit,
   btnAdd,
   configFormForValidation,
-  submitButtonSelector,
   TOKEN
  } from "../utils/constants.js";
 
@@ -55,14 +54,6 @@ function generateCard(item) {
     return card.createCard();
 }
 
-function setBtnText (popupElement, button, loading, text) {
-  const btn = popupElement.querySelector(button);
-  if (loading) {
-    return (btn.textContent = text);
-  }
-  return (btn.textContent = text);
-};
-
 const photoCard = new Section(
   (item) => {
     const cardElement = generateCard(item);
@@ -80,7 +71,7 @@ const infoProfile = new UserInfo({
 const popupEditProfile = new PopupWithForm(
   '#popupEditProfile',
   ({name, about}) => {
-    setBtnText(popupEditProfile.form, submitButtonSelector, true, 'Сохранение...');
+    popupEditProfile.renderLoading(true, 'Сохранение...');
     api.editProfile({name, about})
       .then(res => {
         const { name, about } = res;
@@ -91,7 +82,7 @@ const popupEditProfile = new PopupWithForm(
         console.log(err);
       })
       .finally(() => {
-        setBtnText(popupEditProfile.form, submitButtonSelector, false, 'Сохранить');
+        popupEditProfile.renderLoading(false);
       });
   }
 );
@@ -100,7 +91,7 @@ popupEditProfile.setEventListeners();
 const popupEditAvatar = new PopupWithForm(
   '#popupEditAvatar',
   ({link}) => {
-    setBtnText(popupEditAvatar.form, submitButtonSelector, true, 'Сохранение...');
+    popupEditAvatar.renderLoading(true, 'Сохранение...');
     api.changeAvatar(link)
       .then(res => {
         infoProfile.setUserAvatar(res.avatar);
@@ -110,7 +101,7 @@ const popupEditAvatar = new PopupWithForm(
         console.log(err);
       })
       .finally(() => {
-        setBtnText(popupEditAvatar.form, submitButtonSelector, false, 'Сохранить');
+        popupEditAvatar.renderLoading(false);
       });
   }
 )
@@ -119,7 +110,7 @@ popupEditAvatar.setEventListeners();
 const popupAddPhoto = new PopupWithForm(
   '#popupAddPhoto',
   ({name, link}) => {
-    setBtnText(popupAddPhoto.form, submitButtonSelector, true, 'Создание...');
+    popupAddPhoto.renderLoading(true, 'Создание...');
     api.addCard({name, link})
       .then(res => {
         const cardElement = generateCard(res);
@@ -130,7 +121,7 @@ const popupAddPhoto = new PopupWithForm(
         console.log(err);
       })
       .finally(() => {
-        setBtnText(popupAddPhoto.form, submitButtonSelector, false, 'Создать');
+        popupAddPhoto.renderLoading(false, 'Создать');
       });
   }
 );

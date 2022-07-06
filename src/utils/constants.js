@@ -23,6 +23,4 @@ export const popupViewPhoto = document.querySelector('#popupViewPhoto');
 export const popupPhoto = popupViewPhoto.querySelector('.popup__image');
 export const popupPhotoTitle = popupViewPhoto.querySelector('.popup__title-image');
 
-export const submitButtonSelector = '.popup__button';
-
 export const TOKEN = '93f303b5-489a-4f9c-a73d-101d47521fd1';
